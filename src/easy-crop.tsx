@@ -61,11 +61,11 @@ const EasyCrop = forwardRef<EasyCropHandle, EasyCropProps>((props, ref) => {
   const [zoomVal, setZoomVal] = useState(INIT_ZOOM);
   const [rotateVal, setRotateVal] = useState(INIT_ROTATE);
   const cropPixelsRef = useRef<Area>({ width: 0, height: 0, x: 0, y: 0 });
-  const [mediaSize, setMediaSize] = useState({ height: 0, width: 0 });
+  // const [mediaSize, setMediaSize] = useState({ height: 0, width: 0 });
   const onMediaLoaded = useCallback(
     (mediaSize) => {
       const { width, height } = mediaSize;
-      setMediaSize({ width, height });
+      // setMediaSize({ width, height });
       const ratioWidth = height * aspect;
 
       if (width > ratioWidth) {

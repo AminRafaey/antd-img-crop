@@ -108,10 +108,10 @@ var EasyCrop = forwardRef(function (props, ref) {
     var _c = useState(INIT_ZOOM), zoomVal = _c[0], setZoomVal = _c[1];
     var _d = useState(INIT_ROTATE), rotateVal = _d[0], setRotateVal = _d[1];
     var cropPixelsRef = useRef({ width: 0, height: 0, x: 0, y: 0 });
-    var _e = useState({ height: 0, width: 0 }); _e[0]; var setMediaSize = _e[1];
+    // const [mediaSize, setMediaSize] = useState({ height: 0, width: 0 });
     var onMediaLoaded = useCallback(function (mediaSize) {
         var width = mediaSize.width, height = mediaSize.height;
-        setMediaSize({ width: width, height: height });
+        // setMediaSize({ width, height });
         var ratioWidth = height * aspect;
         if (width > ratioWidth) {
             setCropSize({ width: ratioWidth, height: height });
