@@ -77,9 +77,9 @@ const EasyCrop = forwardRef<EasyCropHandle, EasyCropProps>((props, ref) => {
     [aspect]
   );
 
-  useEffect(() => {
-    onMediaLoaded(mediaSize);
-  }, [aspect]);
+  // useEffect(() => {
+  //   onMediaLoaded(mediaSize);
+  // }, [aspect]);
   const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
     cropPixelsRef.current = croppedAreaPixels;
   }, []);

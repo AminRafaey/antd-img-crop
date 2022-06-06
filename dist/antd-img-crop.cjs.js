@@ -121,7 +121,7 @@ var EasyCrop = React.forwardRef(function (props, ref) {
     var _c = React.useState(INIT_ZOOM), zoomVal = _c[0], setZoomVal = _c[1];
     var _d = React.useState(INIT_ROTATE), rotateVal = _d[0], setRotateVal = _d[1];
     var cropPixelsRef = React.useRef({ width: 0, height: 0, x: 0, y: 0 });
-    var _e = React.useState({ height: 0, width: 0 }), mediaSize = _e[0], setMediaSize = _e[1];
+    var _e = React.useState({ height: 0, width: 0 }); _e[0]; var setMediaSize = _e[1];
     var onMediaLoaded = React.useCallback(function (mediaSize) {
         var width = mediaSize.width, height = mediaSize.height;
         setMediaSize({ width: width, height: height });
@@ -133,9 +133,9 @@ var EasyCrop = React.forwardRef(function (props, ref) {
             setCropSize({ width: width, height: width / aspect });
         }
     }, [aspect]);
-    React.useEffect(function () {
-        onMediaLoaded(mediaSize);
-    }, [aspect]);
+    // useEffect(() => {
+    //   onMediaLoaded(mediaSize);
+    // }, [aspect]);
     var onCropComplete = React.useCallback(function (croppedArea, croppedAreaPixels) {
         cropPixelsRef.current = croppedAreaPixels;
     }, []);
