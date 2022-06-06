@@ -37,6 +37,7 @@ const ImgCrop = forwardRef<Cropper, ImgCropProps>((props, ref) => {
     onUploadFail,
     cropperProps,
     children,
+    modalChildren,
   } = props;
 
   const cb = useRef<
@@ -239,6 +240,7 @@ const ImgCrop = forwardRef<Cropper, ImgCropProps>((props, ref) => {
           destroyOnClose
           {...modalProps}
         >
+          {modalChildren}
           <EasyCrop
             ref={easyCropRef}
             cropperRef={ref}

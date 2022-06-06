@@ -27,6 +27,7 @@ export interface ImgCropProps {
   cropperProps?: Partial<CropperProps>;
 
   children: JSX.Element;
+  modalChildren?: JSX.Element;
 }
 
 declare const ImgCrop: FC<ImgCropProps>;
