@@ -10,7 +10,7 @@ function __$styleInject(css) {
     return css;
 }
 
-import React, { forwardRef, useState, useRef, useCallback, useImperativeHandle, memo, useMemo } from 'react';
+import React, { forwardRef, useState, useRef, useCallback, useImperativeHandle, memo, useEffect, useMemo } from 'react';
 import AntModal from 'antd/es/modal';
 import AntUpload from 'antd/es/upload';
 import LocaleReceiver from 'antd/es/locale-provider/LocaleReceiver';
@@ -102,7 +102,7 @@ var MIN_ROTATE = -180;
 var MAX_ROTATE = 180;
 
 var EasyCrop = forwardRef(function (props, ref) {
-    var cropperRef = props.cropperRef, image = props.image, aspect = props.aspect, shape = props.shape, grid = props.grid, zoom = props.zoom, rotate = props.rotate, minZoom = props.minZoom, maxZoom = props.maxZoom, cropperProps = props.cropperProps;
+    var cropperRef = props.cropperRef, image = props.image, aspect = props.aspect, shape = props.shape, grid = props.grid, zoom = props.zoom, rotate = props.rotate, minZoom = props.minZoom, maxZoom = props.maxZoom, cropperProps = props.cropperProps; props.onFinalCrop;
     var _a = useState({ x: 0, y: 0 }), crop = _a[0], onCropChange = _a[1];
     var _b = useState({ width: 0, height: 0 }), cropSize = _b[0], setCropSize = _b[1];
     var _c = useState(INIT_ZOOM), zoomVal = _c[0], setZoomVal = _c[1];
@@ -149,7 +149,7 @@ var EasyCrop$1 = memo(EasyCrop);
 __$styleInject(".img-crop-modal .img-crop-container {\n  position: relative;\n  width: 100%;\n  height: 40vh;\n}\n.img-crop-modal .img-crop-control {\n  display: flex;\n  align-items: center;\n  width: 60%;\n  margin-left: auto;\n  margin-right: auto;\n}\n.img-crop-modal .img-crop-control:first-of-type {\n  margin-top: 16px;\n}\n.img-crop-modal .img-crop-control:last-of-type {\n  margin-bottom: -8px;\n}\n.img-crop-modal .img-crop-control button {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  width: 34px;\n  height: 34px;\n  padding: 0;\n  font-style: normal;\n  background: transparent;\n  border: 0;\n  outline: 0;\n  cursor: pointer;\n}\n.img-crop-modal .img-crop-control button[disabled] {\n  cursor: default;\n}\n.img-crop-modal .img-crop-control button + div:only-of-type {\n  flex: 1;\n  margin: 0 8px;\n}\n.img-crop-modal .img-crop-control-zoom button {\n  font-size: 18px;\n}\n.img-crop-modal .img-crop-control-rotate button {\n  font-size: 16px;\n}\n.img-crop-modal .img-crop-control-rotate button:first-of-type {\n  transform: rotate(-20deg);\n}\n.img-crop-modal .img-crop-control-rotate button:last-of-type {\n  transform: rotate(20deg);\n}\n");
 
 var ImgCrop = forwardRef(function (props, ref) {
-    var _a = props.aspect, aspect = _a === void 0 ? 1 : _a, _b = props.shape, shape = _b === void 0 ? 'rect' : _b, _c = props.grid, grid = _c === void 0 ? false : _c, _d = props.quality, quality = _d === void 0 ? 0.4 : _d, _e = props.fillColor, fillColor = _e === void 0 ? 'white' : _e, _f = props.zoom, zoom = _f === void 0 ? true : _f, _g = props.rotate, rotate = _g === void 0 ? false : _g, _h = props.minZoom, minZoom = _h === void 0 ? 1 : _h, _j = props.maxZoom, maxZoom = _j === void 0 ? 3 : _j, modalTitle = props.modalTitle, modalWidth = props.modalWidth, modalOk = props.modalOk, modalCancel = props.modalCancel, modalMaskTransitionName = props.modalMaskTransitionName, modalTransitionName = props.modalTransitionName, onModalOk = props.onModalOk, onModalCancel = props.onModalCancel, beforeCrop = props.beforeCrop, onUploadFail = props.onUploadFail, cropperProps = props.cropperProps, children = props.children, modalChildren = props.modalChildren;
+    var _a = props.aspect, aspect = _a === void 0 ? 1 : _a, _b = props.shape, shape = _b === void 0 ? 'rect' : _b, _c = props.grid, grid = _c === void 0 ? false : _c, _d = props.quality, quality = _d === void 0 ? 0.4 : _d, _e = props.fillColor, fillColor = _e === void 0 ? 'white' : _e, _f = props.zoom, zoom = _f === void 0 ? true : _f, _g = props.rotate, rotate = _g === void 0 ? false : _g, _h = props.minZoom, minZoom = _h === void 0 ? 1 : _h, _j = props.maxZoom, maxZoom = _j === void 0 ? 3 : _j, modalTitle = props.modalTitle, modalWidth = props.modalWidth, modalOk = props.modalOk, modalCancel = props.modalCancel, modalMaskTransitionName = props.modalMaskTransitionName, modalTransitionName = props.modalTransitionName, onModalOk = props.onModalOk, onModalCancel = props.onModalCancel, beforeCrop = props.beforeCrop, onUploadFail = props.onUploadFail, cropperProps = props.cropperProps, children = props.children, modalChildren = props.modalChildren, existingImageUrl = props.existingImageUrl, onFinalCrop = props.onFinalCrop;
     var cb = useRef({});
     cb.current.onModalOk = onModalOk;
     cb.current.onModalCancel = onModalCancel;
@@ -163,6 +163,9 @@ var ImgCrop = forwardRef(function (props, ref) {
     var beforeUploadRef = useRef();
     var resolveRef = useRef();
     var rejectRef = useRef();
+    useEffect(function () {
+        setImage(existingImageUrl);
+    }, [existingImageUrl]);
     var uploadComponent = useMemo(function () {
         var upload = Array.isArray(children) ? children[0] : children;
         var _a = upload.props, beforeUpload = _a.beforeUpload, accept = _a.accept, restUploadProps = __rest(_a, ["beforeUpload", "accept"]);
@@ -244,6 +247,18 @@ var ImgCrop = forwardRef(function (props, ref) {
             ctx = canvas.getContext('2d');
             imgSource = document.querySelector(".".concat(PREFIX, "-media"));
             _a = easyCropRef.current.cropPixelsRef.current, cropWidth = _a.width, cropHeight = _a.height, cropX = _a.x, cropY = _a.y;
+            onFinalCrop({
+                width: cropWidth,
+                height: cropHeight,
+                x: cropX,
+                y: cropY
+            });
+            console.log('====>', {
+                width: cropWidth,
+                height: cropHeight,
+                x: cropX,
+                y: cropY
+            });
             if (rotate && easyCropRef.current.rotateVal !== INIT_ROTATE) {
                 imgWidth = imgSource.naturalWidth, imgHeight = imgSource.naturalHeight;
                 angle = easyCropRef.current.rotateVal * (Math.PI / 180);
@@ -316,7 +331,7 @@ var ImgCrop = forwardRef(function (props, ref) {
         uploadComponent,
         image && (React.createElement(AntModal, __assign({ visible: true, wrapClassName: "".concat(PREFIX, "-modal"), title: titleOfModal, onOk: onOk, onCancel: onCancel, maskClosable: false, destroyOnClose: true }, modalProps),
             modalChildren,
-            React.createElement(EasyCrop$1, { ref: easyCropRef, cropperRef: ref, image: image, aspect: aspect, shape: shape, grid: grid, zoom: zoom, rotate: rotate, minZoom: minZoom, maxZoom: maxZoom, cropperProps: cropperProps }))))); };
+            React.createElement(EasyCrop$1, { ref: easyCropRef, cropperRef: ref, image: image, aspect: aspect, shape: shape, grid: grid, zoom: zoom, rotate: rotate, minZoom: minZoom, maxZoom: maxZoom, cropperProps: cropperProps, onFinalCrop: onFinalCrop }))))); };
     if (modalTitle)
         return getComponent(modalTitle);
     return (React.createElement(LocaleReceiver, null, function (locale, code) { return getComponent(code === 'zh-cn' ? '编辑图片' : 'Edit image'); }));

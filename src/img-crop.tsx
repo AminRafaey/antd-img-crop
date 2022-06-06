@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo, useRef, forwardRef } from 'react';
+import React, { useState, useCallback, useMemo, useRef, forwardRef, useEffect } from 'react';
 import AntModal from 'antd/es/modal';
 import AntUpload from 'antd/es/upload';
 import LocaleReceiver from 'antd/es/locale-provider/LocaleReceiver';
@@ -38,6 +38,8 @@ const ImgCrop = forwardRef<Cropper, ImgCropProps>((props, ref) => {
     cropperProps,
     children,
     modalChildren,
+    existingImageUrl,
+    onFinalCrop,
   } = props;
 
   const cb = useRef<
@@ -56,6 +58,10 @@ const ImgCrop = forwardRef<Cropper, ImgCropProps>((props, ref) => {
   const beforeUploadRef = useRef<UploadProps['beforeUpload']>();
   const resolveRef = useRef<ImgCropProps['onModalOk']>();
   const rejectRef = useRef<(err: Error) => void>();
+
+  useEffect(() => {
+    setImage(existingImageUrl);
+  }, [existingImageUrl]);
 
   const uploadComponent = useMemo(() => {
     const upload = Array.isArray(children) ? children[0] : children;
@@ -146,6 +152,18 @@ const ImgCrop = forwardRef<Cropper, ImgCropProps>((props, ref) => {
       x: cropX,
       y: cropY,
     } = easyCropRef.current.cropPixelsRef.current;
+    onFinalCrop({
+      width: cropWidth,
+      height: cropHeight,
+      x: cropX,
+      y: cropY,
+    });
+    console.log('====>', {
+      width: cropWidth,
+      height: cropHeight,
+      x: cropX,
+      y: cropY,
+    });
 
     if (rotate && easyCropRef.current.rotateVal !== INIT_ROTATE) {
       const { naturalWidth: imgWidth, naturalHeight: imgHeight } = imgSource;
@@ -253,6 +271,7 @@ const ImgCrop = forwardRef<Cropper, ImgCropProps>((props, ref) => {
             minZoom={minZoom}
             maxZoom={maxZoom}
             cropperProps={cropperProps}
+            onFinalCrop={onFinalCrop}
           />
         </AntModal>
       )}
