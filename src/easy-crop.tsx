@@ -6,6 +6,7 @@ import React, {
   forwardRef,
   memo,
   MutableRefObject,
+  useEffect,
 } from 'react';
 import AntSlider from 'antd/es/slider';
 import Cropper from 'react-easy-crop';
@@ -60,10 +61,11 @@ const EasyCrop = forwardRef<EasyCropHandle, EasyCropProps>((props, ref) => {
   const [zoomVal, setZoomVal] = useState(INIT_ZOOM);
   const [rotateVal, setRotateVal] = useState(INIT_ROTATE);
   const cropPixelsRef = useRef<Area>({ width: 0, height: 0, x: 0, y: 0 });
-
+  const [mediaSize, setmediaSize] = useState({ height: 0, width: 0 });
   const onMediaLoaded = useCallback(
     (mediaSize) => {
       const { width, height } = mediaSize;
+      setmediaSize({ width, height });
       const ratioWidth = height * aspect;
 
       if (width > ratioWidth) {
@@ -75,6 +77,9 @@ const EasyCrop = forwardRef<EasyCropHandle, EasyCropProps>((props, ref) => {
     [aspect]
   );
 
+  useEffect(() => {
+    onMediaLoaded(mediaSize);
+  }, [aspect]);
   const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
     cropPixelsRef.current = croppedAreaPixels;
   }, []);

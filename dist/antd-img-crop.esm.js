@@ -10,7 +10,7 @@ function __$styleInject(css) {
     return css;
 }
 
-import React, { forwardRef, useState, useRef, useCallback, useImperativeHandle, memo, useMemo } from 'react';
+import React, { forwardRef, useState, useRef, useCallback, useEffect, useImperativeHandle, memo, useMemo } from 'react';
 import AntModal from 'antd/es/modal';
 import AntUpload from 'antd/es/upload';
 import LocaleReceiver from 'antd/es/locale-provider/LocaleReceiver';
@@ -108,8 +108,10 @@ var EasyCrop = forwardRef(function (props, ref) {
     var _c = useState(INIT_ZOOM), zoomVal = _c[0], setZoomVal = _c[1];
     var _d = useState(INIT_ROTATE), rotateVal = _d[0], setRotateVal = _d[1];
     var cropPixelsRef = useRef({ width: 0, height: 0, x: 0, y: 0 });
+    var _e = useState({ height: 0, width: 0 }), mediaSize = _e[0], setmediaSize = _e[1];
     var onMediaLoaded = useCallback(function (mediaSize) {
         var width = mediaSize.width, height = mediaSize.height;
+        setmediaSize({ width: width, height: height });
         var ratioWidth = height * aspect;
         if (width > ratioWidth) {
             setCropSize({ width: ratioWidth, height: height });
@@ -117,6 +119,9 @@ var EasyCrop = forwardRef(function (props, ref) {
         else {
             setCropSize({ width: width, height: width / aspect });
         }
+    }, [aspect]);
+    useEffect(function () {
+        onMediaLoaded(mediaSize);
     }, [aspect]);
     var onCropComplete = useCallback(function (croppedArea, croppedAreaPixels) {
         cropPixelsRef.current = croppedAreaPixels;
