@@ -136,6 +136,7 @@ var EasyCrop = React.forwardRef(function (props, ref) {
     // useEffect(() => {
     //   onMediaLoaded(mediaSize);
     // }, [aspect]);
+    console.log('🍊🍊🍊🍊', cropPixelsRef);
     var onCropComplete = React.useCallback(function (croppedArea, croppedAreaPixels) {
         cropPixelsRef.current = croppedAreaPixels;
     }, []);
