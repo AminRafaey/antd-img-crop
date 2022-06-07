@@ -155,15 +155,12 @@ const ImgCrop = forwardRef<Cropper, ImgCropProps>((props, ref) => {
       y: cropY,
     } = easyCropRef.current.cropPixelsRef.current;
 
-    if (alreadyImage) {
-      onFinalCrop({
-        width: cropWidth,
-        height: cropHeight,
-        x: cropX,
-        y: cropY,
-      });
-      return;
-    }
+    onFinalCrop({
+      width: cropWidth,
+      height: cropHeight,
+      x: cropX,
+      y: cropY,
+    });
 
     if (rotate && easyCropRef.current.rotateVal !== INIT_ROTATE) {
       const { naturalWidth: imgWidth, naturalHeight: imgHeight } = imgSource;

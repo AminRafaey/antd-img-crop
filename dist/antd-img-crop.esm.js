@@ -248,15 +248,12 @@ var ImgCrop = forwardRef(function (props, ref) {
             ctx = canvas.getContext('2d');
             imgSource = document.querySelector(".".concat(PREFIX, "-media"));
             _a = easyCropRef.current.cropPixelsRef.current, cropWidth = _a.width, cropHeight = _a.height, cropX = _a.x, cropY = _a.y;
-            if (alreadyImage) {
-                onFinalCrop({
-                    width: cropWidth,
-                    height: cropHeight,
-                    x: cropX,
-                    y: cropY
-                });
-                return [2 /*return*/];
-            }
+            onFinalCrop({
+                width: cropWidth,
+                height: cropHeight,
+                x: cropX,
+                y: cropY
+            });
             if (rotate && easyCropRef.current.rotateVal !== INIT_ROTATE) {
                 imgWidth = imgSource.naturalWidth, imgHeight = imgSource.naturalHeight;
                 angle = easyCropRef.current.rotateVal * (Math.PI / 180);
