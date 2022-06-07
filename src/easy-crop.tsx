@@ -39,7 +39,6 @@ interface EasyCropProps
   > {
   cropperRef: ForwardedRef<Cropper>;
   image: string;
-  onFinalCrop?: any;
 }
 
 const EasyCrop = forwardRef<EasyCropHandle, EasyCropProps>((props, ref) => {
@@ -55,7 +54,6 @@ const EasyCrop = forwardRef<EasyCropHandle, EasyCropProps>((props, ref) => {
     minZoom,
     maxZoom,
     cropperProps,
-    onFinalCrop,
   } = props;
 
   const [crop, onCropChange] = useState<Point>({ x: 0, y: 0 });
@@ -120,7 +118,6 @@ const EasyCrop = forwardRef<EasyCropHandle, EasyCropProps>((props, ref) => {
         maxZoom={maxZoom}
         onMediaLoaded={onMediaLoaded}
         onCropComplete={onCropComplete}
-        // onFinalCrop={onFinalCrop}
         classes={{ containerClassName: `${PREFIX}-container`, mediaClassName: `${PREFIX}-media` }}
       />
       {zoom && (

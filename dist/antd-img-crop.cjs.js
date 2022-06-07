@@ -115,7 +115,7 @@ var MIN_ROTATE = -180;
 var MAX_ROTATE = 180;
 
 var EasyCrop = React.forwardRef(function (props, ref) {
-    var cropperRef = props.cropperRef, image = props.image, aspect = props.aspect, shape = props.shape, grid = props.grid, zoom = props.zoom, rotate = props.rotate, minZoom = props.minZoom, maxZoom = props.maxZoom, cropperProps = props.cropperProps; props.onFinalCrop;
+    var cropperRef = props.cropperRef, image = props.image, aspect = props.aspect, shape = props.shape, grid = props.grid, zoom = props.zoom, rotate = props.rotate, minZoom = props.minZoom, maxZoom = props.maxZoom, cropperProps = props.cropperProps;
     var _a = React.useState({ x: 0, y: 0 }), crop = _a[0], onCropChange = _a[1];
     var _b = React.useState({ width: 0, height: 0 }), cropSize = _b[0], setCropSize = _b[1];
     var _c = React.useState(INIT_ZOOM), zoomVal = _c[0], setZoomVal = _c[1];
@@ -146,9 +146,7 @@ var EasyCrop = React.forwardRef(function (props, ref) {
         cropPixelsRef: cropPixelsRef
     }); }, [rotateVal]);
     return (React__default["default"].createElement(React__default["default"].Fragment, null,
-        React__default["default"].createElement(Cropper__default["default"], __assign({}, cropperProps, { ref: cropperRef, image: image, crop: crop, cropSize: cropSize, onCropChange: onCropChange, aspect: aspect, cropShape: shape, showGrid: grid, zoomWithScroll: zoom, zoom: zoomVal, rotation: rotateVal, onZoomChange: setZoomVal, onRotationChange: setRotateVal, minZoom: minZoom, maxZoom: maxZoom, onMediaLoaded: onMediaLoaded, onCropComplete: onCropComplete, 
-            // onFinalCrop={onFinalCrop}
-            classes: { containerClassName: "".concat(PREFIX, "-container"), mediaClassName: "".concat(PREFIX, "-media") } })),
+        React__default["default"].createElement(Cropper__default["default"], __assign({}, cropperProps, { ref: cropperRef, image: image, crop: crop, cropSize: cropSize, onCropChange: onCropChange, aspect: aspect, cropShape: shape, showGrid: grid, zoomWithScroll: zoom, zoom: zoomVal, rotation: rotateVal, onZoomChange: setZoomVal, onRotationChange: setRotateVal, minZoom: minZoom, maxZoom: maxZoom, onMediaLoaded: onMediaLoaded, onCropComplete: onCropComplete, classes: { containerClassName: "".concat(PREFIX, "-container"), mediaClassName: "".concat(PREFIX, "-media") } })),
         zoom && (React__default["default"].createElement("section", { className: "".concat(PREFIX, "-control ").concat(PREFIX, "-control-zoom") },
             React__default["default"].createElement("button", { onClick: function () { return setZoomVal(zoomVal - ZOOM_STEP); }, disabled: zoomVal - ZOOM_STEP < minZoom }, "\uFF0D"),
             React__default["default"].createElement(AntSlider__default["default"], { min: minZoom, max: maxZoom, step: ZOOM_STEP, value: zoomVal, onChange: setZoomVal }),
@@ -179,7 +177,6 @@ var ImgCrop = React.forwardRef(function (props, ref) {
     var rejectRef = React.useRef();
     React.useEffect(function () {
         if (alreadyImage) {
-            console.log('👞, in Useeffect', alreadyImage);
             setImage(alreadyImage);
         }
     }, [alreadyImage]);
@@ -264,12 +261,15 @@ var ImgCrop = React.forwardRef(function (props, ref) {
             ctx = canvas.getContext('2d');
             imgSource = document.querySelector(".".concat(PREFIX, "-media"));
             _a = easyCropRef.current.cropPixelsRef.current, cropWidth = _a.width, cropHeight = _a.height, cropX = _a.x, cropY = _a.y;
-            onFinalCrop({
-                width: cropWidth,
-                height: cropHeight,
-                x: cropX,
-                y: cropY
-            });
+            if (alreadyImage) {
+                onFinalCrop({
+                    width: cropWidth,
+                    height: cropHeight,
+                    x: cropX,
+                    y: cropY
+                });
+                return [2 /*return*/];
+            }
             if (rotate && easyCropRef.current.rotateVal !== INIT_ROTATE) {
                 imgWidth = imgSource.naturalWidth, imgHeight = imgSource.naturalHeight;
                 angle = easyCropRef.current.rotateVal * (Math.PI / 180);

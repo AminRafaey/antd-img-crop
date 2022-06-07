@@ -61,7 +61,6 @@ const ImgCrop = forwardRef<Cropper, ImgCropProps>((props, ref) => {
 
   useEffect(() => {
     if (alreadyImage) {
-      console.log('👞, in Useeffect', alreadyImage);
       setImage(alreadyImage);
     }
   }, [alreadyImage]);
@@ -155,12 +154,16 @@ const ImgCrop = forwardRef<Cropper, ImgCropProps>((props, ref) => {
       x: cropX,
       y: cropY,
     } = easyCropRef.current.cropPixelsRef.current;
-    onFinalCrop({
-      width: cropWidth,
-      height: cropHeight,
-      x: cropX,
-      y: cropY,
-    });
+
+    if (alreadyImage) {
+      onFinalCrop({
+        width: cropWidth,
+        height: cropHeight,
+        x: cropX,
+        y: cropY,
+      });
+      return;
+    }
 
     if (rotate && easyCropRef.current.rotateVal !== INIT_ROTATE) {
       const { naturalWidth: imgWidth, naturalHeight: imgHeight } = imgSource;
@@ -268,7 +271,6 @@ const ImgCrop = forwardRef<Cropper, ImgCropProps>((props, ref) => {
             minZoom={minZoom}
             maxZoom={maxZoom}
             cropperProps={cropperProps}
-            // onFinalCrop={onFinalCrop}
           />
         </AntModal>
       )}
