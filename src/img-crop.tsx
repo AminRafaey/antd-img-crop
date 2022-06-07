@@ -38,7 +38,7 @@ const ImgCrop = forwardRef<Cropper, ImgCropProps>((props, ref) => {
     cropperProps,
     children,
     modalChildren,
-    alreadyImage,
+    existingImageUrl,
     onFinalCrop = () => {},
   } = props;
 
@@ -60,10 +60,10 @@ const ImgCrop = forwardRef<Cropper, ImgCropProps>((props, ref) => {
   const rejectRef = useRef<(err: Error) => void>();
 
   useEffect(() => {
-    if (alreadyImage) {
-      setImage(alreadyImage);
+    if (existingImageUrl) {
+      setImage(existingImageUrl);
     }
-  }, [alreadyImage]);
+  }, [existingImageUrl]);
 
   const uploadComponent = useMemo(() => {
     const upload = Array.isArray(children) ? children[0] : children;
@@ -154,14 +154,16 @@ const ImgCrop = forwardRef<Cropper, ImgCropProps>((props, ref) => {
       x: cropX,
       y: cropY,
     } = easyCropRef.current.cropPixelsRef.current;
-
-    onFinalCrop({
-      width: cropWidth,
-      height: cropHeight,
-      x: cropX,
-      y: cropY,
-      url: alreadyImage,
-    });
+    if (existingImageUrl) {
+      onFinalCrop({
+        width: cropWidth,
+        height: cropHeight,
+        x: cropX,
+        y: cropY,
+        url: existingImageUrl,
+      });
+      return;
+    }
 
     if (rotate && easyCropRef.current.rotateVal !== INIT_ROTATE) {
       const { naturalWidth: imgWidth, naturalHeight: imgHeight } = imgSource;
@@ -240,7 +242,7 @@ const ImgCrop = forwardRef<Cropper, ImgCropProps>((props, ref) => {
       type,
       quality
     );
-  }, [alreadyImage, rotate, quality, fillColor]);
+  }, [existingImageUrl, rotate, quality, fillColor]);
 
   const getComponent = (titleOfModal) => (
     <>
