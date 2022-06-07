@@ -29,7 +29,13 @@ export interface ImgCropProps {
   children: JSX.Element;
   modalChildren?: JSX.Element;
   existingImageUrl?: string;
-  onFinalCrop?: (a: any) => void;
+  onFinalCrop?: (data: {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+    url: string;
+  }) => void;
 }
 
 declare const ImgCrop: FC<ImgCropProps>;

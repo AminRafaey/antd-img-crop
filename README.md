@@ -59,6 +59,8 @@ const Demo = () => (
 | beforeCrop              | `function`           | -              | Call before modal open, if return `false`, it'll not open                          |
 | onUploadFail            | `function`           | -              | Call when upload failed                                                            |
 | cropperProps            | `object`             | -              | Props of [react-easy-crop] (\* [existing props] cannot be overridden)              |
+| existingImageUrl        | `string`             | -              | pass Image URL to Open the Modal and crop the image                                |
+| onFinalCrop             | `function`           | -              | `({x,y,width,height,url:existingImageUrl})=>`                                                                 |
 
 ## Styles
 
