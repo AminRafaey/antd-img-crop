@@ -39,7 +39,7 @@ const ImgCrop = forwardRef<Cropper, ImgCropProps>((props, ref) => {
     children,
     modalChildren,
     alreadyImage,
-    onFinalCrop,
+    onFinalCrop = () => {},
   } = props;
 
   const cb = useRef<
@@ -160,6 +160,7 @@ const ImgCrop = forwardRef<Cropper, ImgCropProps>((props, ref) => {
       height: cropHeight,
       x: cropX,
       y: cropY,
+      url: alreadyImage,
     });
 
     if (rotate && easyCropRef.current.rotateVal !== INIT_ROTATE) {
@@ -194,7 +195,6 @@ const ImgCrop = forwardRef<Cropper, ImgCropProps>((props, ref) => {
       canvas.width = cropWidth;
       canvas.height = cropHeight;
       ctx.putImageData(imgData, -cropX, -cropY);
-      console.log('-=-=-=> CTx 🔥', ctx);
     } else {
       canvas.width = cropWidth;
       canvas.height = cropHeight;
@@ -202,11 +202,10 @@ const ImgCrop = forwardRef<Cropper, ImgCropProps>((props, ref) => {
       ctx.fillRect(0, 0, cropWidth, cropHeight);
 
       ctx.drawImage(imgSource, cropX, cropY, cropWidth, cropHeight, 0, 0, cropWidth, cropHeight);
-      console.log('-=-=-=> CTx', ctx?.canvas.width, ctx?.canvas?.height);
     }
 
     // get the new image
-    const { type = 'jpg', name, uid } = fileRef.current;
+    const { type, name, uid } = fileRef.current;
     canvas.toBlob(
       async (blob: Blob | null) => {
         const newFile = Object.assign(new File([blob], name, { type }), { uid }) as RcFile;

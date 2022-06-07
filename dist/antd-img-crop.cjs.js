@@ -161,7 +161,7 @@ var EasyCrop$1 = React.memo(EasyCrop);
 __$styleInject(".img-crop-modal .img-crop-container {\n  position: relative;\n  width: 100%;\n  height: 40vh;\n}\n.img-crop-modal .img-crop-control {\n  display: flex;\n  align-items: center;\n  width: 60%;\n  margin-left: auto;\n  margin-right: auto;\n}\n.img-crop-modal .img-crop-control:first-of-type {\n  margin-top: 16px;\n}\n.img-crop-modal .img-crop-control:last-of-type {\n  margin-bottom: -8px;\n}\n.img-crop-modal .img-crop-control button {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  width: 34px;\n  height: 34px;\n  padding: 0;\n  font-style: normal;\n  background: transparent;\n  border: 0;\n  outline: 0;\n  cursor: pointer;\n}\n.img-crop-modal .img-crop-control button[disabled] {\n  cursor: default;\n}\n.img-crop-modal .img-crop-control button + div:only-of-type {\n  flex: 1;\n  margin: 0 8px;\n}\n.img-crop-modal .img-crop-control-zoom button {\n  font-size: 18px;\n}\n.img-crop-modal .img-crop-control-rotate button {\n  font-size: 16px;\n}\n.img-crop-modal .img-crop-control-rotate button:first-of-type {\n  transform: rotate(-20deg);\n}\n.img-crop-modal .img-crop-control-rotate button:last-of-type {\n  transform: rotate(20deg);\n}\n");
 
 var ImgCrop = React.forwardRef(function (props, ref) {
-    var _a = props.aspect, aspect = _a === void 0 ? 1 : _a, _b = props.shape, shape = _b === void 0 ? 'rect' : _b, _c = props.grid, grid = _c === void 0 ? false : _c, _d = props.quality, quality = _d === void 0 ? 0.4 : _d, _e = props.fillColor, fillColor = _e === void 0 ? 'white' : _e, _f = props.zoom, zoom = _f === void 0 ? true : _f, _g = props.rotate, rotate = _g === void 0 ? false : _g, _h = props.minZoom, minZoom = _h === void 0 ? 1 : _h, _j = props.maxZoom, maxZoom = _j === void 0 ? 3 : _j, modalTitle = props.modalTitle, modalWidth = props.modalWidth, modalOk = props.modalOk, modalCancel = props.modalCancel, modalMaskTransitionName = props.modalMaskTransitionName, modalTransitionName = props.modalTransitionName, onModalOk = props.onModalOk, onModalCancel = props.onModalCancel, beforeCrop = props.beforeCrop, onUploadFail = props.onUploadFail, cropperProps = props.cropperProps, children = props.children, modalChildren = props.modalChildren, alreadyImage = props.alreadyImage, onFinalCrop = props.onFinalCrop;
+    var _a = props.aspect, aspect = _a === void 0 ? 1 : _a, _b = props.shape, shape = _b === void 0 ? 'rect' : _b, _c = props.grid, grid = _c === void 0 ? false : _c, _d = props.quality, quality = _d === void 0 ? 0.4 : _d, _e = props.fillColor, fillColor = _e === void 0 ? 'white' : _e, _f = props.zoom, zoom = _f === void 0 ? true : _f, _g = props.rotate, rotate = _g === void 0 ? false : _g, _h = props.minZoom, minZoom = _h === void 0 ? 1 : _h, _j = props.maxZoom, maxZoom = _j === void 0 ? 3 : _j, modalTitle = props.modalTitle, modalWidth = props.modalWidth, modalOk = props.modalOk, modalCancel = props.modalCancel, modalMaskTransitionName = props.modalMaskTransitionName, modalTransitionName = props.modalTransitionName, onModalOk = props.onModalOk, onModalCancel = props.onModalCancel, beforeCrop = props.beforeCrop, onUploadFail = props.onUploadFail, cropperProps = props.cropperProps, children = props.children, modalChildren = props.modalChildren, alreadyImage = props.alreadyImage, _k = props.onFinalCrop, onFinalCrop = _k === void 0 ? function () { } : _k;
     var cb = React.useRef({});
     cb.current.onModalOk = onModalOk;
     cb.current.onModalCancel = onModalCancel;
@@ -170,7 +170,7 @@ var ImgCrop = React.forwardRef(function (props, ref) {
     /**
      * Upload
      */
-    var _k = React.useState(''), image = _k[0], setImage = _k[1];
+    var _l = React.useState(''), image = _l[0], setImage = _l[1];
     var fileRef = React.useRef();
     var beforeUploadRef = React.useRef();
     var resolveRef = React.useRef();
@@ -254,9 +254,8 @@ var ImgCrop = React.forwardRef(function (props, ref) {
         onClose();
     }, []);
     var onOk = React.useCallback(function () { return __awaiter(void 0, void 0, void 0, function () {
-        var canvas, ctx, imgSource, _a, cropWidth, cropHeight, cropX, cropY, imgWidth, imgHeight, angle, sine, cosine, squareWidth, squareHeight, squareHalfWidth, squareHalfHeight, imgX, imgY, imgData, _b, _c, type, name, uid;
-        var _d;
-        return __generator(this, function (_e) {
+        var canvas, ctx, imgSource, _a, cropWidth, cropHeight, cropX, cropY, imgWidth, imgHeight, angle, sine, cosine, squareWidth, squareHeight, squareHalfWidth, squareHalfHeight, imgX, imgY, imgData, _b, type, name, uid;
+        return __generator(this, function (_c) {
             onClose();
             canvas = document.createElement('canvas');
             ctx = canvas.getContext('2d');
@@ -266,7 +265,8 @@ var ImgCrop = React.forwardRef(function (props, ref) {
                 width: cropWidth,
                 height: cropHeight,
                 x: cropX,
-                y: cropY
+                y: cropY,
+                url: alreadyImage
             });
             if (rotate && easyCropRef.current.rotateVal !== INIT_ROTATE) {
                 imgWidth = imgSource.naturalWidth, imgHeight = imgSource.naturalHeight;
@@ -291,7 +291,6 @@ var ImgCrop = React.forwardRef(function (props, ref) {
                 canvas.width = cropWidth;
                 canvas.height = cropHeight;
                 ctx.putImageData(imgData, -cropX, -cropY);
-                console.log('-=-=-=> CTx 🔥', ctx);
             }
             else {
                 canvas.width = cropWidth;
@@ -299,9 +298,8 @@ var ImgCrop = React.forwardRef(function (props, ref) {
                 ctx.fillStyle = fillColor;
                 ctx.fillRect(0, 0, cropWidth, cropHeight);
                 ctx.drawImage(imgSource, cropX, cropY, cropWidth, cropHeight, 0, 0, cropWidth, cropHeight);
-                console.log('-=-=-=> CTx', ctx === null || ctx === void 0 ? void 0 : ctx.canvas.width, (_d = ctx === null || ctx === void 0 ? void 0 : ctx.canvas) === null || _d === void 0 ? void 0 : _d.height);
             }
-            _b = fileRef.current, _c = _b.type, type = _c === void 0 ? 'jpg' : _c, name = _b.name, uid = _b.uid;
+            _b = fileRef.current, type = _b.type, name = _b.name, uid = _b.uid;
             canvas.toBlob(function (blob) { return __awaiter(void 0, void 0, void 0, function () {
                 var newFile, result;
                 return __generator(this, function (_a) {
