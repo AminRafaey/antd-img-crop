@@ -286,7 +286,7 @@ var ImgCrop = forwardRef(function (props, ref) {
                 ctx.fillStyle = fillColor;
                 ctx.fillRect(0, 0, cropWidth, cropHeight);
                 ctx.drawImage(imgSource, cropX, cropY, cropWidth, cropHeight, 0, 0, cropWidth, cropHeight);
-                console.log('-=-=-=> CTx', ctx === null || ctx === void 0 ? void 0 : ctx.canvas.clientHeight, (_d = ctx === null || ctx === void 0 ? void 0 : ctx.canvas) === null || _d === void 0 ? void 0 : _d.clientWidth);
+                console.log('-=-=-=> CTx', ctx === null || ctx === void 0 ? void 0 : ctx.canvas.width, (_d = ctx === null || ctx === void 0 ? void 0 : ctx.canvas) === null || _d === void 0 ? void 0 : _d.height);
             }
             _b = fileRef.current, _c = _b.type, type = _c === void 0 ? 'jpg' : _c, name = _b.name, uid = _b.uid;
             canvas.toBlob(function (blob) { return __awaiter(void 0, void 0, void 0, function () {
