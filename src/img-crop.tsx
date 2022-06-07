@@ -240,7 +240,7 @@ const ImgCrop = forwardRef<Cropper, ImgCropProps>((props, ref) => {
       type,
       quality
     );
-  }, [fillColor, quality, rotate]);
+  }, [alreadyImage, rotate, quality, fillColor]);
 
   const getComponent = (titleOfModal) => (
     <>
