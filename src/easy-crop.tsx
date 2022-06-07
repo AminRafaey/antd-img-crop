@@ -39,7 +39,7 @@ interface EasyCropProps
   > {
   cropperRef: ForwardedRef<Cropper>;
   image: string;
-  onFinalCrop: any;
+  onFinalCrop?: any;
 }
 
 const EasyCrop = forwardRef<EasyCropHandle, EasyCropProps>((props, ref) => {
@@ -63,11 +63,12 @@ const EasyCrop = forwardRef<EasyCropHandle, EasyCropProps>((props, ref) => {
   const [zoomVal, setZoomVal] = useState(INIT_ZOOM);
   const [rotateVal, setRotateVal] = useState(INIT_ROTATE);
   const cropPixelsRef = useRef<Area>({ width: 0, height: 0, x: 0, y: 0 });
-  const [mediaSize, setMediaSize] = useState({ height: 0, width: 0 });
+
+  const [mediaSizeNew, setMediaSizeNew] = useState({ width: 0, height: 0 });
   const onMediaLoaded = useCallback(
     (mediaSize) => {
       const { width, height } = mediaSize;
-      setMediaSize({ width, height });
+      setMediaSizeNew(mediaSize);
       const ratioWidth = height * aspect;
 
       if (width > ratioWidth) {
@@ -80,11 +81,10 @@ const EasyCrop = forwardRef<EasyCropHandle, EasyCropProps>((props, ref) => {
   );
 
   useEffect(() => {
-    onMediaLoaded(mediaSize);
+    onMediaLoaded(mediaSizeNew);
   }, [aspect]);
 
   const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
-    console.log('🍊🍊🍊🍊', cropPixelsRef);
     cropPixelsRef.current = croppedAreaPixels;
   }, []);
 
@@ -120,6 +120,7 @@ const EasyCrop = forwardRef<EasyCropHandle, EasyCropProps>((props, ref) => {
         maxZoom={maxZoom}
         onMediaLoaded={onMediaLoaded}
         onCropComplete={onCropComplete}
+        // onFinalCrop={onFinalCrop}
         classes={{ containerClassName: `${PREFIX}-container`, mediaClassName: `${PREFIX}-media` }}
       />
       {zoom && (

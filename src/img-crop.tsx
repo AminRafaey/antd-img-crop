@@ -38,7 +38,7 @@ const ImgCrop = forwardRef<Cropper, ImgCropProps>((props, ref) => {
     cropperProps,
     children,
     modalChildren,
-    existingImageUrl,
+    alreadyImage,
     onFinalCrop,
   } = props;
 
@@ -60,8 +60,11 @@ const ImgCrop = forwardRef<Cropper, ImgCropProps>((props, ref) => {
   const rejectRef = useRef<(err: Error) => void>();
 
   useEffect(() => {
-    setImage(existingImageUrl);
-  }, [existingImageUrl]);
+    if (alreadyImage) {
+      console.log('👞, in Useeffect', alreadyImage);
+      setImage(alreadyImage);
+    }
+  }, [alreadyImage]);
 
   const uploadComponent = useMemo(() => {
     const upload = Array.isArray(children) ? children[0] : children;
@@ -153,12 +156,6 @@ const ImgCrop = forwardRef<Cropper, ImgCropProps>((props, ref) => {
       y: cropY,
     } = easyCropRef.current.cropPixelsRef.current;
     onFinalCrop({
-      width: cropWidth,
-      height: cropHeight,
-      x: cropX,
-      y: cropY,
-    });
-    console.log('====>', {
       width: cropWidth,
       height: cropHeight,
       x: cropX,
@@ -271,7 +268,7 @@ const ImgCrop = forwardRef<Cropper, ImgCropProps>((props, ref) => {
             minZoom={minZoom}
             maxZoom={maxZoom}
             cropperProps={cropperProps}
-            onFinalCrop={onFinalCrop}
+            // onFinalCrop={onFinalCrop}
           />
         </AntModal>
       )}

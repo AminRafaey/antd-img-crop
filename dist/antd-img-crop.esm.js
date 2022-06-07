@@ -108,10 +108,10 @@ var EasyCrop = forwardRef(function (props, ref) {
     var _c = useState(INIT_ZOOM), zoomVal = _c[0], setZoomVal = _c[1];
     var _d = useState(INIT_ROTATE), rotateVal = _d[0], setRotateVal = _d[1];
     var cropPixelsRef = useRef({ width: 0, height: 0, x: 0, y: 0 });
-    var _e = useState({ height: 0, width: 0 }), mediaSize = _e[0], setMediaSize = _e[1];
+    var _e = useState({ width: 0, height: 0 }), mediaSizeNew = _e[0], setMediaSizeNew = _e[1];
     var onMediaLoaded = useCallback(function (mediaSize) {
         var width = mediaSize.width, height = mediaSize.height;
-        setMediaSize({ width: width, height: height });
+        setMediaSizeNew(mediaSize);
         var ratioWidth = height * aspect;
         if (width > ratioWidth) {
             setCropSize({ width: ratioWidth, height: height });
@@ -121,10 +121,9 @@ var EasyCrop = forwardRef(function (props, ref) {
         }
     }, [aspect]);
     useEffect(function () {
-        onMediaLoaded(mediaSize);
+        onMediaLoaded(mediaSizeNew);
     }, [aspect]);
     var onCropComplete = useCallback(function (croppedArea, croppedAreaPixels) {
-        console.log('🍊🍊🍊🍊', cropPixelsRef);
         cropPixelsRef.current = croppedAreaPixels;
     }, []);
     useImperativeHandle(ref, function () { return ({
@@ -134,7 +133,9 @@ var EasyCrop = forwardRef(function (props, ref) {
         cropPixelsRef: cropPixelsRef
     }); }, [rotateVal]);
     return (React.createElement(React.Fragment, null,
-        React.createElement(Cropper, __assign({}, cropperProps, { ref: cropperRef, image: image, crop: crop, cropSize: cropSize, onCropChange: onCropChange, aspect: aspect, cropShape: shape, showGrid: grid, zoomWithScroll: zoom, zoom: zoomVal, rotation: rotateVal, onZoomChange: setZoomVal, onRotationChange: setRotateVal, minZoom: minZoom, maxZoom: maxZoom, onMediaLoaded: onMediaLoaded, onCropComplete: onCropComplete, classes: { containerClassName: "".concat(PREFIX, "-container"), mediaClassName: "".concat(PREFIX, "-media") } })),
+        React.createElement(Cropper, __assign({}, cropperProps, { ref: cropperRef, image: image, crop: crop, cropSize: cropSize, onCropChange: onCropChange, aspect: aspect, cropShape: shape, showGrid: grid, zoomWithScroll: zoom, zoom: zoomVal, rotation: rotateVal, onZoomChange: setZoomVal, onRotationChange: setRotateVal, minZoom: minZoom, maxZoom: maxZoom, onMediaLoaded: onMediaLoaded, onCropComplete: onCropComplete, 
+            // onFinalCrop={onFinalCrop}
+            classes: { containerClassName: "".concat(PREFIX, "-container"), mediaClassName: "".concat(PREFIX, "-media") } })),
         zoom && (React.createElement("section", { className: "".concat(PREFIX, "-control ").concat(PREFIX, "-control-zoom") },
             React.createElement("button", { onClick: function () { return setZoomVal(zoomVal - ZOOM_STEP); }, disabled: zoomVal - ZOOM_STEP < minZoom }, "\uFF0D"),
             React.createElement(AntSlider, { min: minZoom, max: maxZoom, step: ZOOM_STEP, value: zoomVal, onChange: setZoomVal }),
@@ -149,7 +150,7 @@ var EasyCrop$1 = memo(EasyCrop);
 __$styleInject(".img-crop-modal .img-crop-container {\n  position: relative;\n  width: 100%;\n  height: 40vh;\n}\n.img-crop-modal .img-crop-control {\n  display: flex;\n  align-items: center;\n  width: 60%;\n  margin-left: auto;\n  margin-right: auto;\n}\n.img-crop-modal .img-crop-control:first-of-type {\n  margin-top: 16px;\n}\n.img-crop-modal .img-crop-control:last-of-type {\n  margin-bottom: -8px;\n}\n.img-crop-modal .img-crop-control button {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  width: 34px;\n  height: 34px;\n  padding: 0;\n  font-style: normal;\n  background: transparent;\n  border: 0;\n  outline: 0;\n  cursor: pointer;\n}\n.img-crop-modal .img-crop-control button[disabled] {\n  cursor: default;\n}\n.img-crop-modal .img-crop-control button + div:only-of-type {\n  flex: 1;\n  margin: 0 8px;\n}\n.img-crop-modal .img-crop-control-zoom button {\n  font-size: 18px;\n}\n.img-crop-modal .img-crop-control-rotate button {\n  font-size: 16px;\n}\n.img-crop-modal .img-crop-control-rotate button:first-of-type {\n  transform: rotate(-20deg);\n}\n.img-crop-modal .img-crop-control-rotate button:last-of-type {\n  transform: rotate(20deg);\n}\n");
 
 var ImgCrop = forwardRef(function (props, ref) {
-    var _a = props.aspect, aspect = _a === void 0 ? 1 : _a, _b = props.shape, shape = _b === void 0 ? 'rect' : _b, _c = props.grid, grid = _c === void 0 ? false : _c, _d = props.quality, quality = _d === void 0 ? 0.4 : _d, _e = props.fillColor, fillColor = _e === void 0 ? 'white' : _e, _f = props.zoom, zoom = _f === void 0 ? true : _f, _g = props.rotate, rotate = _g === void 0 ? false : _g, _h = props.minZoom, minZoom = _h === void 0 ? 1 : _h, _j = props.maxZoom, maxZoom = _j === void 0 ? 3 : _j, modalTitle = props.modalTitle, modalWidth = props.modalWidth, modalOk = props.modalOk, modalCancel = props.modalCancel, modalMaskTransitionName = props.modalMaskTransitionName, modalTransitionName = props.modalTransitionName, onModalOk = props.onModalOk, onModalCancel = props.onModalCancel, beforeCrop = props.beforeCrop, onUploadFail = props.onUploadFail, cropperProps = props.cropperProps, children = props.children, modalChildren = props.modalChildren, existingImageUrl = props.existingImageUrl, onFinalCrop = props.onFinalCrop;
+    var _a = props.aspect, aspect = _a === void 0 ? 1 : _a, _b = props.shape, shape = _b === void 0 ? 'rect' : _b, _c = props.grid, grid = _c === void 0 ? false : _c, _d = props.quality, quality = _d === void 0 ? 0.4 : _d, _e = props.fillColor, fillColor = _e === void 0 ? 'white' : _e, _f = props.zoom, zoom = _f === void 0 ? true : _f, _g = props.rotate, rotate = _g === void 0 ? false : _g, _h = props.minZoom, minZoom = _h === void 0 ? 1 : _h, _j = props.maxZoom, maxZoom = _j === void 0 ? 3 : _j, modalTitle = props.modalTitle, modalWidth = props.modalWidth, modalOk = props.modalOk, modalCancel = props.modalCancel, modalMaskTransitionName = props.modalMaskTransitionName, modalTransitionName = props.modalTransitionName, onModalOk = props.onModalOk, onModalCancel = props.onModalCancel, beforeCrop = props.beforeCrop, onUploadFail = props.onUploadFail, cropperProps = props.cropperProps, children = props.children, modalChildren = props.modalChildren, alreadyImage = props.alreadyImage, onFinalCrop = props.onFinalCrop;
     var cb = useRef({});
     cb.current.onModalOk = onModalOk;
     cb.current.onModalCancel = onModalCancel;
@@ -164,8 +165,11 @@ var ImgCrop = forwardRef(function (props, ref) {
     var resolveRef = useRef();
     var rejectRef = useRef();
     useEffect(function () {
-        setImage(existingImageUrl);
-    }, [existingImageUrl]);
+        if (alreadyImage) {
+            console.log('👞, in Useeffect', alreadyImage);
+            setImage(alreadyImage);
+        }
+    }, [alreadyImage]);
     var uploadComponent = useMemo(function () {
         var upload = Array.isArray(children) ? children[0] : children;
         var _a = upload.props, beforeUpload = _a.beforeUpload, accept = _a.accept, restUploadProps = __rest(_a, ["beforeUpload", "accept"]);
@@ -253,12 +257,6 @@ var ImgCrop = forwardRef(function (props, ref) {
                 x: cropX,
                 y: cropY
             });
-            console.log('====>', {
-                width: cropWidth,
-                height: cropHeight,
-                x: cropX,
-                y: cropY
-            });
             if (rotate && easyCropRef.current.rotateVal !== INIT_ROTATE) {
                 imgWidth = imgSource.naturalWidth, imgHeight = imgSource.naturalHeight;
                 angle = easyCropRef.current.rotateVal * (Math.PI / 180);
@@ -331,7 +329,7 @@ var ImgCrop = forwardRef(function (props, ref) {
         uploadComponent,
         image && (React.createElement(AntModal, __assign({ visible: true, wrapClassName: "".concat(PREFIX, "-modal"), title: titleOfModal, onOk: onOk, onCancel: onCancel, maskClosable: false, destroyOnClose: true }, modalProps),
             modalChildren,
-            React.createElement(EasyCrop$1, { ref: easyCropRef, cropperRef: ref, image: image, aspect: aspect, shape: shape, grid: grid, zoom: zoom, rotate: rotate, minZoom: minZoom, maxZoom: maxZoom, cropperProps: cropperProps, onFinalCrop: onFinalCrop }))))); };
+            React.createElement(EasyCrop$1, { ref: easyCropRef, cropperRef: ref, image: image, aspect: aspect, shape: shape, grid: grid, zoom: zoom, rotate: rotate, minZoom: minZoom, maxZoom: maxZoom, cropperProps: cropperProps }))))); };
     if (modalTitle)
         return getComponent(modalTitle);
     return (React.createElement(LocaleReceiver, null, function (locale, code) { return getComponent(code === 'zh-cn' ? '编辑图片' : 'Edit image'); }));
