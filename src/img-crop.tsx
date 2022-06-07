@@ -202,7 +202,7 @@ const ImgCrop = forwardRef<Cropper, ImgCropProps>((props, ref) => {
       ctx.fillRect(0, 0, cropWidth, cropHeight);
 
       ctx.drawImage(imgSource, cropX, cropY, cropWidth, cropHeight, 0, 0, cropWidth, cropHeight);
-      console.log('-=-=-=> CTx', ctx?.canvas?.style?.width, ctx?.canvas?.style?.height);
+      console.log('-=-=-=> CTx', ctx?.canvas.clientHeight, ctx?.canvas?.clientWidth);
     }
 
     // get the new image

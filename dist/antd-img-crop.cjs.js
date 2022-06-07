@@ -255,8 +255,8 @@ var ImgCrop = React.forwardRef(function (props, ref) {
     }, []);
     var onOk = React.useCallback(function () { return __awaiter(void 0, void 0, void 0, function () {
         var canvas, ctx, imgSource, _a, cropWidth, cropHeight, cropX, cropY, imgWidth, imgHeight, angle, sine, cosine, squareWidth, squareHeight, squareHalfWidth, squareHalfHeight, imgX, imgY, imgData, _b, _c, type, name, uid;
-        var _d, _e, _f, _g;
-        return __generator(this, function (_h) {
+        var _d;
+        return __generator(this, function (_e) {
             onClose();
             canvas = document.createElement('canvas');
             ctx = canvas.getContext('2d');
@@ -299,7 +299,7 @@ var ImgCrop = React.forwardRef(function (props, ref) {
                 ctx.fillStyle = fillColor;
                 ctx.fillRect(0, 0, cropWidth, cropHeight);
                 ctx.drawImage(imgSource, cropX, cropY, cropWidth, cropHeight, 0, 0, cropWidth, cropHeight);
-                console.log('-=-=-=> CTx', (_e = (_d = ctx === null || ctx === void 0 ? void 0 : ctx.canvas) === null || _d === void 0 ? void 0 : _d.style) === null || _e === void 0 ? void 0 : _e.width, (_g = (_f = ctx === null || ctx === void 0 ? void 0 : ctx.canvas) === null || _f === void 0 ? void 0 : _f.style) === null || _g === void 0 ? void 0 : _g.height);
+                console.log('-=-=-=> CTx', ctx === null || ctx === void 0 ? void 0 : ctx.canvas.clientHeight, (_d = ctx === null || ctx === void 0 ? void 0 : ctx.canvas) === null || _d === void 0 ? void 0 : _d.clientWidth);
             }
             _b = fileRef.current, _c = _b.type, type = _c === void 0 ? 'jpg' : _c, name = _b.name, uid = _b.uid;
             canvas.toBlob(function (blob) { return __awaiter(void 0, void 0, void 0, function () {
