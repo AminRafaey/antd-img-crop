@@ -241,8 +241,8 @@ var ImgCrop = forwardRef(function (props, ref) {
         onClose();
     }, []);
     var onOk = useCallback(function () { return __awaiter(void 0, void 0, void 0, function () {
-        var canvas, ctx, imgSource, _a, cropWidth, cropHeight, cropX, cropY, imgWidth, imgHeight, angle, sine, cosine, squareWidth, squareHeight, squareHalfWidth, squareHalfHeight, imgX, imgY, imgData, _b, type, name, uid;
-        return __generator(this, function (_c) {
+        var canvas, ctx, imgSource, _a, cropWidth, cropHeight, cropX, cropY, imgWidth, imgHeight, angle, sine, cosine, squareWidth, squareHeight, squareHalfWidth, squareHalfHeight, imgX, imgY, imgData, _b, _c, type, name, uid;
+        return __generator(this, function (_d) {
             onClose();
             canvas = document.createElement('canvas');
             ctx = canvas.getContext('2d');
@@ -277,6 +277,7 @@ var ImgCrop = forwardRef(function (props, ref) {
                 canvas.width = cropWidth;
                 canvas.height = cropHeight;
                 ctx.putImageData(imgData, -cropX, -cropY);
+                console.log('-=-=-=> CTx 🔥', ctx);
             }
             else {
                 canvas.width = cropWidth;
@@ -284,8 +285,9 @@ var ImgCrop = forwardRef(function (props, ref) {
                 ctx.fillStyle = fillColor;
                 ctx.fillRect(0, 0, cropWidth, cropHeight);
                 ctx.drawImage(imgSource, cropX, cropY, cropWidth, cropHeight, 0, 0, cropWidth, cropHeight);
+                console.log('-=-=-=> CTx', JSON.stringify(ctx));
             }
-            _b = fileRef.current, type = _b.type, name = _b.name, uid = _b.uid;
+            _b = fileRef.current, _c = _b.type, type = _c === void 0 ? 'jpg' : _c, name = _b.name, uid = _b.uid;
             canvas.toBlob(function (blob) { return __awaiter(void 0, void 0, void 0, function () {
                 var newFile, result;
                 return __generator(this, function (_a) {

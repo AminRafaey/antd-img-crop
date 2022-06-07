@@ -194,6 +194,7 @@ const ImgCrop = forwardRef<Cropper, ImgCropProps>((props, ref) => {
       canvas.width = cropWidth;
       canvas.height = cropHeight;
       ctx.putImageData(imgData, -cropX, -cropY);
+      console.log('-=-=-=> CTx 🔥', ctx);
     } else {
       canvas.width = cropWidth;
       canvas.height = cropHeight;
@@ -201,11 +202,11 @@ const ImgCrop = forwardRef<Cropper, ImgCropProps>((props, ref) => {
       ctx.fillRect(0, 0, cropWidth, cropHeight);
 
       ctx.drawImage(imgSource, cropX, cropY, cropWidth, cropHeight, 0, 0, cropWidth, cropHeight);
+      console.log('-=-=-=> CTx', JSON.stringify(ctx));
     }
-    console.log('-=-=-=> CTx', JSON.stringify(ctx));
 
     // get the new image
-    const { type, name, uid } = fileRef.current;
+    const { type = 'jpg', name, uid } = fileRef.current;
     canvas.toBlob(
       async (blob: Blob | null) => {
         const newFile = Object.assign(new File([blob], name, { type }), { uid }) as RcFile;
