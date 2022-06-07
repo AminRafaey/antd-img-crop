@@ -202,6 +202,7 @@ const ImgCrop = forwardRef<Cropper, ImgCropProps>((props, ref) => {
 
       ctx.drawImage(imgSource, cropX, cropY, cropWidth, cropHeight, 0, 0, cropWidth, cropHeight);
     }
+    console.log('-=-=-=> CTx', JSON.stringify(ctx));
 
     // get the new image
     const { type, name, uid } = fileRef.current;
