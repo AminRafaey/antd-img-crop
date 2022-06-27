@@ -35,6 +35,7 @@ export interface ImgCropProps {
     width: number;
     height: number;
     url: string;
+    shape: string;
   }) => void;
 }
 

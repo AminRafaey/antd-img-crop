@@ -161,6 +161,7 @@ const ImgCrop = forwardRef<Cropper, ImgCropProps>((props, ref) => {
         x: cropX,
         y: cropY,
         url: existingImageUrl,
+        shape,
       });
       return;
     }

@@ -267,7 +267,8 @@ var ImgCrop = React.forwardRef(function (props, ref) {
                     height: cropHeight,
                     x: cropX,
                     y: cropY,
-                    url: existingImageUrl
+                    url: existingImageUrl,
+                    shape: shape
                 });
                 return [2 /*return*/];
             }
