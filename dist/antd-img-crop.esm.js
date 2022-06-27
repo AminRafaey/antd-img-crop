@@ -326,7 +326,7 @@ var ImgCrop = forwardRef(function (props, ref) {
             }); }, type, quality);
             return [2 /*return*/];
         });
-    }); }, [existingImageUrl, rotate, quality, fillColor]);
+    }); }, [existingImageUrl, rotate, quality, onFinalCrop, shape, fillColor]);
     var getComponent = function (titleOfModal) { return (React.createElement(React.Fragment, null,
         uploadComponent,
         image && (React.createElement(AntModal, __assign({ visible: true, wrapClassName: "".concat(PREFIX, "-modal"), title: titleOfModal, onOk: onOk, onCancel: onCancel, maskClosable: false, destroyOnClose: true }, modalProps),
