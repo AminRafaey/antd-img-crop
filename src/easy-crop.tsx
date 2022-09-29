@@ -170,4 +170,6 @@ const EasyCrop = forwardRef<EasyCropHandle, EasyCropProps>((props, ref) => {
   );
 });
 
-export default memo(EasyCrop);
+export default memo(EasyCrop,({image:prevImage,aspect:prevAspect},{image,aspect})=>{
+return prevImage === image && prevAspect === aspect
+});

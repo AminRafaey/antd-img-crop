@@ -156,7 +156,11 @@ var EasyCrop = React.forwardRef(function (props, ref) {
             React__default["default"].createElement(AntSlider__default["default"], { min: MIN_ROTATE, max: MAX_ROTATE, step: ROTATE_STEP, value: rotateVal, onChange: setRotateVal }),
             React__default["default"].createElement("button", { onClick: function () { return setRotateVal(rotateVal + ROTATE_STEP); }, disabled: rotateVal === MAX_ROTATE }, "\u21BB")))));
 });
-var EasyCrop$1 = React.memo(EasyCrop);
+var EasyCrop$1 = React.memo(EasyCrop, function (_a, _b) {
+    var prevImage = _a.image, prevAspect = _a.aspect;
+    var image = _b.image, aspect = _b.aspect;
+    return prevImage === image && prevAspect === aspect;
+});
 
 __$styleInject(".img-crop-modal .img-crop-container {\n  position: relative;\n  width: 100%;\n  height: 40vh;\n}\n.img-crop-modal .img-crop-control {\n  display: flex;\n  align-items: center;\n  width: 60%;\n  margin-left: auto;\n  margin-right: auto;\n}\n.img-crop-modal .img-crop-control:first-of-type {\n  margin-top: 16px;\n}\n.img-crop-modal .img-crop-control:last-of-type {\n  margin-bottom: -8px;\n}\n.img-crop-modal .img-crop-control button {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  width: 34px;\n  height: 34px;\n  padding: 0;\n  font-style: normal;\n  background: transparent;\n  border: 0;\n  outline: 0;\n  cursor: pointer;\n}\n.img-crop-modal .img-crop-control button[disabled] {\n  cursor: default;\n}\n.img-crop-modal .img-crop-control button + div:only-of-type {\n  flex: 1;\n  margin: 0 8px;\n}\n.img-crop-modal .img-crop-control-zoom button {\n  font-size: 18px;\n}\n.img-crop-modal .img-crop-control-rotate button {\n  font-size: 16px;\n}\n.img-crop-modal .img-crop-control-rotate button:first-of-type {\n  transform: rotate(-20deg);\n}\n.img-crop-modal .img-crop-control-rotate button:last-of-type {\n  transform: rotate(20deg);\n}\n");
 
